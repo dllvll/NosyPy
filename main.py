@@ -6,18 +6,21 @@ from modules import http_headers
 from modules import whois_lookup
 from modules import utils
 from rich import print
+from urllib.parse import urlsplit
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
-    domain = parser.parse_args().url
+    parsed = urlsplit(parser.parse_args().url)
 
-    if not domain.startswith("http://") and not domain.startswith("https://"):
+    if parsed.scheme not in ["http", "https"]:
         sys.exit("Errore: inserisci un URL valido con http:// o https://.")
+
+    base_url = f"{parsed.scheme}://{parsed.netloc}"
 
     # WHOIS
     try:
-        w = whois_lookup.get_whois(domain)
+        w = whois_lookup.get_whois(parsed.netloc)
         utils.print_table(w, "WHOIS")
     except whois.exceptions.WhoisDomainNotFoundError:
         print("Errore: il dominio non è stato trovato.")
@@ -26,7 +29,7 @@ def main():
 
     # HTTP Headers
     try:
-        headers = http_headers.get_headers(domain)
+        headers = http_headers.get_headers(base_url)
         utils.print_table(headers, "HTTP Headers")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
