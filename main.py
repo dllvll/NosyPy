@@ -9,7 +9,7 @@ from rich import print
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("url", help="the url you want to recon", default="https://www.voltatrieste.edu.it")
+    parser.add_argument("url", help="the url you want to recon")
     domain = parser.parse_args().url
 
     if not domain.startswith("http://") and not domain.startswith("https://"):
