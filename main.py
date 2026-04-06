@@ -6,6 +6,7 @@ from modules import http_headers
 from modules import whois_lookup
 from modules import utils
 from modules import robots_txt
+from modules import security_txt
 from rich import print
 from urllib.parse import urlsplit
 
@@ -18,6 +19,16 @@ def main():
         sys.exit("Errore: inserisci un URL valido con http:// o https://.")
 
     base_url = f"{parsed.scheme}://{parsed.netloc}"
+
+    # SECURITY
+    try:
+        security = security_txt.get_security_txt(base_url)
+        with open(f"{parsed.netloc}_security.txt", "w") as f:
+            f.write(security)
+    except whois.exceptions.WhoisDomainNotFoundError:
+        print("Errore: il dominio non è stato trovato.")
+    except requests.exceptions.HTTPError:
+        print("Il file security.txt non è stato trovato.")
 
     # ROBOTS
     try:
@@ -46,7 +57,6 @@ def main():
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
         print("Errore HTTP: " + e.args[0])
-
 
 if __name__ == "__main__":
     main()
