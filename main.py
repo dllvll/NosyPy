@@ -5,6 +5,7 @@ import sys
 from modules import http_headers
 from modules import whois_lookup
 from modules import utils
+from modules import robots_txt
 from rich import print
 from urllib.parse import urlsplit
 
@@ -17,6 +18,16 @@ def main():
         sys.exit("Errore: inserisci un URL valido con http:// o https://.")
 
     base_url = f"{parsed.scheme}://{parsed.netloc}"
+
+    # ROBOTS
+    try:
+        robots = robots_txt.get_robots_txt(base_url)
+        with open(f"{parsed.netloc}_robots.txt", "w") as f:
+            f.write(robots)
+    except whois.exceptions.WhoisDomainNotFoundError:
+        print("Errore: il dominio non è stato trovato.")
+    except whois.exceptions.PywhoisError as e:
+        print("Errore WHOIS: " + e.args[0])
 
     # WHOIS
     try:
