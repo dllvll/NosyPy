@@ -25,20 +25,20 @@ def main():
         security = security_txt.get_security_txt(base_url)
         with open(f"{parsed.netloc}_security.txt", "w") as f:
             f.write(security)
-    except whois.exceptions.WhoisDomainNotFoundError:
-        print("Errore: il dominio non è stato trovato.")
-    except requests.exceptions.HTTPError:
-        print("Il file security.txt non è stato trovato.")
+    except requests.exceptions.ConnectionError:
+        print("Errore: il dominio non è raggiungibile.")
+    except requests.exceptions.HTTPError as e:
+        print("Errore HTTP: " + e.args[0])
 
     # ROBOTS
     try:
         robots = robots_txt.get_robots_txt(base_url)
         with open(f"{parsed.netloc}_robots.txt", "w") as f:
             f.write(robots)
-    except whois.exceptions.WhoisDomainNotFoundError:
-        print("Errore: il dominio non è stato trovato.")
-    except whois.exceptions.PywhoisError as e:
-        print("Errore WHOIS: " + e.args[0])
+    except requests.exceptions.ConnectionError:
+        print("Errore: il dominio non è raggiungibile.")
+    except requests.exceptions.HTTPError as e:
+        print("Errore HTTP: " + e.args[0])
 
     # WHOIS
     try:
