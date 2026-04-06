@@ -5,8 +5,7 @@ import sys
 from modules import http_headers
 from modules import whois_lookup
 from modules import utils
-from modules import robots_txt
-from modules import security_txt
+from modules import file_grabber
 from rich import print
 from urllib.parse import urlsplit
 
@@ -22,9 +21,10 @@ def main():
 
     # SECURITY
     try:
-        security = security_txt.get_security_txt(base_url)
+        security = file_grabber.get_security_txt(base_url)
         with open(f"{parsed.netloc}_security.txt", "w") as f:
             f.write(security)
+        print(f"File security.txt salvato come {parsed.netloc}_security.txt")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
@@ -32,9 +32,10 @@ def main():
 
     # ROBOTS
     try:
-        robots = robots_txt.get_robots_txt(base_url)
+        robots = file_grabber.get_robots_txt(base_url)
         with open(f"{parsed.netloc}_robots.txt", "w") as f:
             f.write(robots)
+        print(f"File robots.txt salvato come {parsed.netloc}_robots.txt")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
