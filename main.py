@@ -22,8 +22,7 @@ def main():
     # SECURITY
     try:
         security = file_grabber.get_security_txt(base_url)
-        with open(f"{parsed.netloc}_security.txt", "w") as f:
-            f.write(security)
+        utils.save_file(f"{parsed.netloc}_security.txt", security)
         print(f"File security.txt salvato come {parsed.netloc}_security.txt")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
@@ -33,8 +32,7 @@ def main():
     # ROBOTS
     try:
         robots = file_grabber.get_robots_txt(base_url)
-        with open(f"{parsed.netloc}_robots.txt", "w") as f:
-            f.write(robots)
+        utils.save_file(f"{parsed.netloc}_robots.txt", robots)
         print(f"File robots.txt salvato come {parsed.netloc}_robots.txt")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
