@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 
 
 def main():
-    utils.print_banner()
+    console.print_banner()
 
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
@@ -57,7 +57,7 @@ def main():
     # WHOIS
     try:
         w = whois_lookup.get_whois(parsed.netloc)
-        utils.print_table(w, "WHOIS")
+        console.print_table(w, "WHOIS")
     except whois.exceptions.WhoisDomainNotFoundError:
         print("Errore: il dominio non è stato trovato.")
     except whois.exceptions.PywhoisError as e:
@@ -66,7 +66,7 @@ def main():
     # HTTP Headers
     try:
         headers = http_headers.get_headers(base_url)
-        utils.print_table(headers, "HTTP Headers")
+        console.print_table(headers, "HTTP Headers")
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
