@@ -2,6 +2,7 @@ import requests
 import argparse
 import whois
 import sys
+from modules import console
 from modules import http_headers
 from modules import whois_lookup
 from modules import utils
