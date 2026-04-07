@@ -31,12 +31,12 @@ def main():
         try:
             status_code = page_prober.probe_url(url)
             if status_code == 200:
-                console.print_success("(well-known)", f"Found {well_known.strip()} at {url}")
+                console.print_success("well-known", f"Found {well_known.strip()} at {url}")
             else:
-                console.print_warning("(well-known)", f"{well_known.strip()} not found (Status code: {status_code})",
+                console.print_warning("well-known", f"{well_known.strip()} not found (Status code: {status_code})",
                 )
         except requests.exceptions.RequestException as e:
-            console.print_error("(well-known)", f"Error probing {well_known.strip()}: {e}")
+            console.print_error("well-known", f"Error probing {well_known.strip()}: {e}")
 
     # WHOIS
     try:
