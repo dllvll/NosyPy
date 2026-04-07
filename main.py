@@ -28,10 +28,10 @@ def main():
         robots = file_grabber.get_file(base_url, "robots.txt")
 
         if robots is None:
-            console.print_warning("robots.txt", "Robots Exclusion Protocol: robots.txt not found on this host.")
+            console.print_warning("robots.txt", "File not found on this host.")
         else:
             utils.save_file(f"{parsed.netloc}_robots.txt", robots)
-            console.print_success("robots.txt", f"Robots Exclusion Protocol: robots.txt saved as {parsed.netloc}_robots.txt")
+            console.print_success("robots.txt", f"File saved as {parsed.netloc}_robots.txt")
 
     except requests.exceptions.ConnectionError:
         console.print_error("robots.txt", "Error: host is unreachable.")
@@ -40,13 +40,13 @@ def main():
 
     # SECURITY
     try:
-        security = file_grabber.get_security_txt(base_url)
+        security = file_grabber.get_file(base_url, "security.txt")
 
         if security is None:
-            console.print_warning("security.txt", "security.txt not found on this host.")
+            console.print_warning("security.txt", "File not found on this host.")
         else:
             utils.save_file(f"{parsed.netloc}_security.txt", security)
-            console.print_success("security.txt", f"security.txt saved as {parsed.netloc}_security.txt")
+            console.print_success("security.txt", f"File saved as {parsed.netloc}_security.txt")
 
     except requests.exceptions.ConnectionError:
         console.print_error("security.txt", "Error: host is unreachable.")
@@ -57,8 +57,8 @@ def main():
     # WHOIS
     try:
         w = whois_lookup.get_whois(parsed.netloc)
-        console.print_success("WHOIS", "Informazioni WHOIS recuperate:\n")
-        console.print_table(w, "WHOIS\n")
+        console.print_success("whois", "WHOIS Information found:")
+        console.print_table(w, "WHOIS")
         print()
     except whois.exceptions.WhoisDomainNotFoundError:
         console.print_error("WHOIS", "Error: the domain was not found.")
@@ -68,8 +68,8 @@ def main():
     # HTTP Headers
     try:
         headers = http_headers.get_headers(base_url)
-        console.print_success("HTTP Headers", "HTTP Headers:\n")
-        console.print_table(headers, "HTTP Headers\n")
+        console.print_success("http_headers", "HTTP Headers found:")
+        console.print_table(headers, "HTTP Headers")
         print()
     except requests.exceptions.ConnectionError:
         console.print_error("HTTP Headers", "Error: host is unreachable.")
