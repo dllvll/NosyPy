@@ -28,48 +28,52 @@ def main():
         security = file_grabber.get_security_txt(base_url)
 
         if security is None:
-            print("Il file security.txt non è presente sul sito.")
+            console.print_warning("security.txt", "Il file security.txt non è presente sul sito.")
         else:
             utils.save_file(f"{parsed.netloc}_security.txt", security)
-            print(f"File security.txt salvato come {parsed.netloc}_security.txt")
+            console.print_success("security.txt", f"File security.txt salvato come {parsed.netloc}_security.txt")
 
     except requests.exceptions.ConnectionError:
-        print("Errore: il dominio non è raggiungibile.")
+        console.print_error("security.txt", "Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
-        print("Errore HTTP: " + e.args[0])
+        console.print_error("security.txt", "Errore HTTP: " + e.args[0])
 
     # ROBOTS
     try:
         robots = file_grabber.get_robots_txt(base_url)
 
         if robots is None:
-            print("Il file robots.txt non è presente sul sito.")
+            console.print_warning("robots.txt", "Il file robots.txt non è presente sul sito.")
         else:
             utils.save_file(f"{parsed.netloc}_robots.txt", robots)
-            print(f"File robots.txt salvato come {parsed.netloc}_robots.txt")
+            console.print_success("robots.txt", f"File robots.txt salvato come {parsed.netloc}_robots.txt")
 
     except requests.exceptions.ConnectionError:
-        print("Errore: il dominio non è raggiungibile.")
+        console.print_error("robots.txt", "Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
-        print("Errore HTTP: " + e.args[0])
+        console.print_error("robots.txt", "Errore HTTP: " + e.args[0])
 
     # WHOIS
     try:
         w = whois_lookup.get_whois(parsed.netloc)
-        console.print_table(w, "WHOIS")
+        console.print_success("WHOIS", "Informazioni WHOIS recuperate:\n")
+        console.print_table(w, "WHOIS\n")
+        print()
     except whois.exceptions.WhoisDomainNotFoundError:
-        print("Errore: il dominio non è stato trovato.")
+        console.print_error("WHOIS", "Errore: il dominio non è stato trovato.")
     except whois.exceptions.PywhoisError as e:
-        print("Errore WHOIS: " + e.args[0])
+        console.print_error("WHOIS", "Errore WHOIS: " + e.args[0])
 
     # HTTP Headers
     try:
         headers = http_headers.get_headers(base_url)
-        console.print_table(headers, "HTTP Headers")
+        console.print_success("HTTP Headers", "Intestazioni HTTP recuperate:\n")
+        console.print_table(headers, "HTTP Headers\n")
+        print()
     except requests.exceptions.ConnectionError:
-        print("Errore: il dominio non è raggiungibile.")
+        console.print_error("HTTP Headers", "Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
-        print("Errore HTTP: " + e.args[0])
+        console.print_error("HTTP Headers", "Errore HTTP: " + e.args[0])
 
 if __name__ == "__main__":
     main()
