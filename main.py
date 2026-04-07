@@ -2,14 +2,13 @@ import requests
 import argparse
 import whois
 import sys
+from rich import print
 from modules import console
 from modules import http_headers
 from modules import whois_lookup
 from modules import utils
 from modules import file_grabber
-from rich import print
 from urllib.parse import urlsplit
-
 
 def main():
     console.print_banner()
@@ -71,7 +70,6 @@ def main():
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
         print("Errore HTTP: " + e.args[0])
-
 
 if __name__ == "__main__":
     main()
