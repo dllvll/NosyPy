@@ -21,6 +21,7 @@ def main():
         sys.exit("Errore: inserisci un URL valido con http:// o https://.")
 
     base_url = f"{parsed.scheme}://{parsed.netloc}"
+    print(f"\t[ Host: {parsed.netloc} ]\n")
 
     # SECURITY
     try:
