@@ -1,6 +1,5 @@
 import requests
 
-# ROBOTS.TXT
 def get_robots_txt(base_url):
     """Recupera il file robots.txt di un sito."""
     url = f"{base_url}/robots.txt"
@@ -12,7 +11,6 @@ def get_robots_txt(base_url):
     robots.raise_for_status()
     return robots.text
 
-# SECURITY.TXT
 def get_security_txt(base_url):
     """Recupera il file security.txt di un sito."""
     url = f"{base_url}/security.txt"

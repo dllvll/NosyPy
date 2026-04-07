@@ -11,6 +11,8 @@ from urllib.parse import urlsplit
 
 
 def main():
+    utils.print_banner()
+
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
     parsed = urlsplit(parser.parse_args().url)
