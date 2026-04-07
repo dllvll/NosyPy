@@ -9,6 +9,7 @@ from modules import file_grabber
 from rich import print
 from urllib.parse import urlsplit
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
@@ -22,8 +23,13 @@ def main():
     # SECURITY
     try:
         security = file_grabber.get_security_txt(base_url)
-        utils.save_file(f"{parsed.netloc}_security.txt", security)
-        print(f"File security.txt salvato come {parsed.netloc}_security.txt")
+
+        if security is None:
+            print("Il file security.txt non è presente sul sito.")
+        else:
+            utils.save_file(f"{parsed.netloc}_security.txt", security)
+            print(f"File security.txt salvato come {parsed.netloc}_security.txt")
+
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
@@ -32,8 +38,13 @@ def main():
     # ROBOTS
     try:
         robots = file_grabber.get_robots_txt(base_url)
-        utils.save_file(f"{parsed.netloc}_robots.txt", robots)
-        print(f"File robots.txt salvato come {parsed.netloc}_robots.txt")
+
+        if robots is None:
+            print("Il file robots.txt non è presente sul sito.")
+        else:
+            utils.save_file(f"{parsed.netloc}_robots.txt", robots)
+            print(f"File robots.txt salvato come {parsed.netloc}_robots.txt")
+
     except requests.exceptions.ConnectionError:
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
@@ -56,6 +67,7 @@ def main():
         print("Errore: il dominio non è raggiungibile.")
     except requests.exceptions.HTTPError as e:
         print("Errore HTTP: " + e.args[0])
+
 
 if __name__ == "__main__":
     main()

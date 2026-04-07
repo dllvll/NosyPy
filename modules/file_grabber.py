@@ -5,6 +5,10 @@ def get_robots_txt(base_url):
     """Recupera il file robots.txt di un sito."""
     url = f"{base_url}/robots.txt"
     robots = requests.get(url, timeout=10)
+
+    if robots.status_code == 404:
+        return None
+    
     robots.raise_for_status()
     return robots.text
 
@@ -18,5 +22,8 @@ def get_security_txt(base_url):
         url = f"{base_url}/.well-known/security.txt"
         security = requests.get(url, timeout=10)
     
+    if security.status_code == 404:
+        return None
+
     security.raise_for_status()
     return security.text
