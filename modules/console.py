@@ -15,7 +15,7 @@ def print_banner():
 
 def print_table(tableData, tableTitle):
     """Stampa una tabella di informazioni."""
-    table = Table(title=tableTitle)
+    table = Table()
     table.add_column("Campo")
     table.add_column("Valore")
 
