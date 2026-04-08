@@ -1,6 +1,7 @@
 import requests
 
 def get_geolocation(ip_address):
+    """Get geolocation information for a given IP address."""
     response = requests.get(f"https://ipinfo.io/{ip_address}/json")
     response.raise_for_status()
     data = response.json()
