@@ -13,12 +13,15 @@ from modules import geo_lookup
 from urllib.parse import urlsplit
 from rich.progress import track
 
+
 def probe_well_knowns(base_url: str, netloc: str) -> None:
     print()
     with open("well_knowns.txt", "r") as file:
         well_knowns = file.readlines()
 
-    for well_known in track(well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."):
+    for well_known in track(
+        well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."
+    ):
         url = f"{base_url}/{well_known.strip()}"
         try:
             status_code = page_prober.probe_url(url)
@@ -27,11 +30,38 @@ def probe_well_knowns(base_url: str, netloc: str) -> None:
             # Redirection messages (300 – 399)
             # Client error responses (400 – 499)
             if 200 <= status_code < 400:
-                console.print_success("well-known", f"Found: {url} (HTTP status code: {status_code})")
+                console.print_success(
+                    "well-known", f"Found: {url} (HTTP status code: {status_code})"
+                )
         except requests.exceptions.RequestException as e:
             console.print_error(
                 "well-known", f"Error probing {well_known.strip()}: {e}"
             )
+
+
+def fetch_http_headers(base_url: str) -> None:
+    print()
+    try:
+        headers = http_headers.get_headers(base_url)
+        console.print_success("http_headers", "HTTP Headers found:")
+        console.print_table(headers, "HTTP Headers")
+    except requests.exceptions.ConnectionError:
+        console.print_error("HTTP Headers", "Error: host is unreachable.")
+    except requests.exceptions.HTTPError as e:
+        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+
+
+def fetch_whois(netloc: str) -> None:
+    print()
+    try:
+        w = whois_lookup.get_whois(netloc)
+        console.print_success("whois", "WHOIS Information found:")
+        console.print_table(w, "WHOIS")
+    except whois.exceptions.WhoisDomainNotFoundError:
+        console.print_error("WHOIS", "Error: the domain was not found.")
+    except whois.exceptions.PywhoisError as e:
+        console.print_error("WHOIS", "WHOIS Error: " + e.args[0])
+
 
 def main():
     console.print_banner()
@@ -56,7 +86,9 @@ def main():
     # IP GEOLOCATION
     print()
     try:
-        console.print_success("geo_lookup", f"Geolocation information found for {ip_address}:")
+        console.print_success(
+            "geo_lookup", f"Geolocation information found for {ip_address}:"
+        )
         console.print_table(geo_lookup.get_geolocation(ip_address), "Geolocation")
     except requests.exceptions.ConnectionError:
         console.print_error("HTTP Headers", "Error: host is unreachable.")
@@ -64,28 +96,8 @@ def main():
         console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
 
     probe_well_knowns(base_url, parsed.netloc)
-
-    # WHOIS
-    print()
-    try:
-        w = whois_lookup.get_whois(parsed.netloc)
-        console.print_success("whois", "WHOIS Information found:")
-        console.print_table(w, "WHOIS")
-    except whois.exceptions.WhoisDomainNotFoundError:
-        console.print_error("WHOIS", "Error: the domain was not found.")
-    except whois.exceptions.PywhoisError as e:
-        console.print_error("WHOIS", "WHOIS Error: " + e.args[0])
-
-    # HTTP Headers
-    print()
-    try:
-        headers = http_headers.get_headers(base_url)
-        console.print_success("http_headers", "HTTP Headers found:")
-        console.print_table(headers, "HTTP Headers")
-    except requests.exceptions.ConnectionError:
-        console.print_error("HTTP Headers", "Error: host is unreachable.")
-    except requests.exceptions.HTTPError as e:
-        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+    fetch_whois(parsed.netloc)
+    fetch_http_headers(base_url)
 
 
 if __name__ == "__main__":
