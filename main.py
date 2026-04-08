@@ -13,6 +13,25 @@ from modules import geo_lookup
 from urllib.parse import urlsplit
 from rich.progress import track
 
+def probe_well_knowns(base_url: str, netloc: str) -> None:
+    print()
+    with open("well_knowns.txt", "r") as file:
+        well_knowns = file.readlines()
+
+    for well_known in track(well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."):
+        url = f"{base_url}/{well_known.strip()}"
+        try:
+            status_code = page_prober.probe_url(url)
+            # HTTP RESPONSE CODES:
+            # Successful responses (200 – 299)
+            # Redirection messages (300 – 399)
+            # Client error responses (400 – 499)
+            if 200 <= status_code < 400:
+                console.print_success("well-known", f"Found: {url} (HTTP status code: {status_code})")
+        except requests.exceptions.RequestException as e:
+            console.print_error(
+                "well-known", f"Error probing {well_known.strip()}: {e}"
+            )
 
 def main():
     console.print_banner()
@@ -44,25 +63,8 @@ def main():
     except requests.exceptions.HTTPError as e:
         console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
 
-    # WELL-KNOWNS PROBING
-    print()
-    with open("well_knowns.txt", "r") as file:
-        well_knowns = file.readlines()
+    probe_well_knowns(base_url, parsed.netloc)
 
-    for well_known in track(well_knowns, description=f"Probing {parsed.netloc} for {len(well_knowns)} URLs..."):
-        url = f"{base_url}/{well_known.strip()}"
-        try:
-            status_code = page_prober.probe_url(url)
-            # HTTP RESPONSE CODES:
-            # Successful responses (200 – 299)
-            # Redirection messages (300 – 399)
-            # Client error responses (400 – 499)
-            if 200 <= status_code < 400:
-                console.print_success("well-known", f"Found: {url} (HTTP status code: {status_code})")
-        except requests.exceptions.RequestException as e:
-            console.print_error(
-                "well-known", f"Error probing {well_known.strip()}: {e}"
-            )
 
     # WHOIS
     print()
