@@ -1,7 +1,7 @@
 import requests
 
 def get_file(base_url, path):
-    """Recupera un file da un URL specificato."""
+    """Download a file from a given URL."""
     url = f"{base_url}/{path}"
     file = requests.get(url, timeout=10)
 
