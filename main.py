@@ -16,7 +16,7 @@ from rich.progress import track
 
 def probe_well_knowns(base_url: str, netloc: str) -> None:
     print()
-    with open("well_knowns.txt", "r") as file:
+    with open("data/well_knowns.txt", "r") as file:
         well_knowns = file.readlines()
 
     for well_known in track(
