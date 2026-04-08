@@ -37,7 +37,6 @@ def main():
     # IP GEOLOCATION
     print()
     try:
-        geo_lookup.get_geolocation(ip_address)
         console.print_success("geo_lookup", f"Geolocation information found for {ip_address}:")
         console.print_table(geo_lookup.get_geolocation(ip_address), "Geolocation")
     except requests.exceptions.ConnectionError:
