@@ -1,5 +1,5 @@
 import whois
 
 def get_whois(domain):
-    """Recupera le informazioni whois di un dominio."""
+    """Get WHOIS information for a given domain."""
     return whois.whois(domain)
