@@ -1,6 +1,6 @@
 import requests
 
-def get_file(base_url, path):
+def get_file(base_url: str, path: str) -> str | None:
     """Download a file from a given URL."""
     url = f"{base_url}/{path}"
     file = requests.get(url, timeout=10)
