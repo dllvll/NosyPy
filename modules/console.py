@@ -2,6 +2,7 @@ from rich.table import Table
 from rich import print
 
 def print_banner():
+    """Print NosyPy's ASCII art banner."""
     banner = r"""
     ▄▄▄    ▄▄▄                   ▄▄▄▄▄▄▄         
     ████▄  ███                   ███▀▀███▄       
@@ -14,7 +15,7 @@ def print_banner():
     print(banner)
 
 def print_table(tableData, tableTitle):
-    """Stampa una tabella di informazioni."""
+    """Print a table with the given data."""
     table = Table(show_header=False)
     table.add_column()
     table.add_column()
@@ -24,13 +25,13 @@ def print_table(tableData, tableTitle):
     print(table)
 
 def print_success(scope, message):
-    """Stampa un messaggio di successo."""
+    """Print a success message."""
     print(f"({scope}) {message}")
 
 def print_error(scope, message):
-    """Stampa un messaggio di errore."""
+    """Print an error message."""
     print(f"({scope}) {message}")
 
 def print_warning(scope, message):
-    """Stampa un messaggio di avviso."""
+    """Print a warning message."""
     print(f"({scope}) {message}")
