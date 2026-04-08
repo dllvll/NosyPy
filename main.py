@@ -12,12 +12,22 @@ from modules import ip_lookup
 from modules import geo_lookup
 from urllib.parse import urlsplit
 from rich.progress import track
+from pathlib import Path
 
 
 def probe_well_knowns(base_url: str, netloc: str) -> None:
     print()
-    with open("data/well_knowns.txt", "r") as file:
-        well_knowns = file.readlines()
+    path = "data/well_knowns.txt"
+
+    try:
+        with open(path, "r") as file:
+            well_knowns = file.readlines()
+    except FileNotFoundError:
+        console.print_error("well-known", "Error: well-knowns.txt file not found.")
+
+    if Path(path).stat().st_size == 0:
+        console.print_warning("well-known", "Warning: well-knowns.txt file is empty.")
+        return
 
     for well_known in track(
         well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."
