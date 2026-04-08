@@ -8,6 +8,8 @@ from modules import http_headers
 from modules import whois_lookup
 from modules import page_prober
 from urllib.parse import urlsplit
+from rich.progress import track
+
 
 def main():
     console.print_banner()
@@ -22,21 +24,24 @@ def main():
     base_url = f"{parsed.scheme}://{parsed.netloc}"
     print(f"\t[ Host: {parsed.netloc} ]\n")
 
-    # PROBE WELL_KNOWNS.TXT
+    # WELL-KNOWNS PROBING
     with open("well_knowns.txt", "r") as file:
         well_knowns = file.readlines()
 
-    for well_known in well_knowns:
+    for well_known in track(well_knowns, description=f"Probing {parsed.netloc} for {len(well_knowns)} URLs..."):
         url = f"{base_url}/{well_known.strip()}"
         try:
             status_code = page_prober.probe_url(url)
-            if status_code == 200:
-                console.print_success("well-known", f"Found {well_known.strip()} at {url}")
-            else:
-                console.print_warning("well-known", f"{well_known.strip()} not found (Status code: {status_code})",
-                )
+            # HTTP RESPONSE CODES:
+            # Successful responses (200 – 299)
+            # Redirection messages (300 – 399)
+            # Client error responses (400 – 499)
+            if 200 <= status_code < 400:
+                console.print_success("well-known", f"Found: {url} (HTTP status code: {status_code})")
         except requests.exceptions.RequestException as e:
-            console.print_error("well-known", f"Error probing {well_known.strip()}: {e}")
+            console.print_error(
+                "well-known", f"Error probing {well_known.strip()}: {e}"
+            )
 
     # WHOIS
     try:
@@ -59,6 +64,7 @@ def main():
         console.print_error("HTTP Headers", "Error: host is unreachable.")
     except requests.exceptions.HTTPError as e:
         console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+
 
 if __name__ == "__main__":
     main()
