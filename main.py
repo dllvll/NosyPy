@@ -73,7 +73,7 @@ def fetch_whois(netloc: str) -> None:
         console.print_error("WHOIS", "WHOIS Error: " + e.args[0])
 
 
-def main():
+def main() -> None:
     console.print_banner()
 
     parser = argparse.ArgumentParser()
