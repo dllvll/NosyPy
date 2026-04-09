@@ -80,7 +80,7 @@ def main() -> None:
     parser.add_argument("url", help="the url you want to recon")
     parsed = urlsplit(parser.parse_args().url)
 
-    if parsed.netloc == "" | parsed.scheme not in ["http", "https"]:
+    if parsed.netloc == "" or parsed.scheme not in ["http", "https"]:
         sys.exit("Error: please enter a valid URL with http:// or https://.")
 
     base_url = f"{parsed.scheme}://{parsed.netloc}"
