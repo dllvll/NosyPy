@@ -14,7 +14,7 @@ def print_banner() -> None:
     """
     print(banner)
 
-def print_table(tableData, tableTitle):
+def print_table(tableData):
     """Print a table with the given data."""
     table = Table(show_header=False)
     table.add_column()
