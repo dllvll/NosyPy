@@ -14,6 +14,14 @@ from urllib.parse import urlsplit
 from rich.progress import track
 from pathlib import Path
 
+def verify_internet_connection() -> None:
+    s = socket.socket()
+    try:
+        s.connect(("8.8.8.8", 53))
+    except socket.error:
+        sys.exit("Error: no internet connection detected.")
+    finally:
+        s.close()
 
 def probe_well_knowns(base_url: str, netloc: str) -> None:
     print()
@@ -85,6 +93,8 @@ def main() -> None:
 
     base_url = f"{parsed.scheme}://{parsed.netloc}"
     print(f"\t[ Host: {parsed.netloc} ]\n")
+
+    verify_internet_connection()
 
     # IP LOOKUP
     try:
