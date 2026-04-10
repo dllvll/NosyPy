@@ -1,8 +1,10 @@
+from time import sleep
 import requests
 import argparse
 import whois
 import sys
 import socket
+from config import Config
 from rich import print
 from modules import console
 from modules import http_headers
@@ -23,7 +25,7 @@ def verify_internet_connection() -> None:
     finally:
         s.close()
 
-def probe_well_knowns(base_url: str, netloc: str) -> None:
+def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     print()
     path = "data/well_knowns.txt"
 
@@ -42,7 +44,7 @@ def probe_well_knowns(base_url: str, netloc: str) -> None:
     ):
         url = f"{base_url}/{well_known.strip()}"
         try:
-            status_code = page_prober.probe_url(url)
+            status_code = page_prober.probe_url(url, config)
             # HTTP RESPONSE CODES:
             # Successful responses (200 – 299)
             # Redirection messages (300 – 399)
@@ -51,6 +53,7 @@ def probe_well_knowns(base_url: str, netloc: str) -> None:
                 console.print_success(
                     "well-known", f"Found: {url} (HTTP status code: {status_code})"
                 )
+            sleep(config.delay)
         except requests.exceptions.RequestException as e:
             console.print_error(
                 "well-known", f"Error probing {well_known.strip()}: {e}"
@@ -86,7 +89,12 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
+    parser.add_argument("-t", "--timeout", type=int, default=10, help="set the timeout for HTTP requests (default: 10 seconds)")
+    parser.add_argument("-d", "--delay", type=int, default=1, help="set the delay between requests in seconds (default: 1 second)")
     parsed = urlsplit(parser.parse_args().url)
+    timeout = parser.parse_args().timeout
+    delay = parser.parse_args().delay
+    config = Config(timeout=timeout, delay=delay)
 
     if parsed.netloc == "" or parsed.scheme not in ["http", "https"]:
         sys.exit("Error: please enter a valid URL with http:// or https://.")
@@ -115,7 +123,7 @@ def main() -> None:
     except requests.exceptions.HTTPError as e:
         console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
 
-    probe_well_knowns(base_url, parsed.netloc)
+    probe_well_knowns(base_url, parsed.netloc, config)
     fetch_whois(parsed.netloc)
     fetch_http_headers(base_url)
 
