@@ -1,5 +1,6 @@
 robots.txt
 security.txt
+sitemap.xml
 .well-known/acme-challenge
 .well-known/agent-card.json
 .well-known/ai-plugin.json
