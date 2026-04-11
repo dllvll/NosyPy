@@ -60,10 +60,6 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
         url = f"{base_url}/{well_known.strip()}"
         try:
             status_code = page_prober.probe_url(url, config)
-            # HTTP RESPONSE CODES:
-            # Successful responses (200 – 299)
-            # Redirection messages (300 – 399)
-            # Client error responses (400 – 499)
             if 200 <= status_code < 400:
                 console.print_success(
                     "well-known", f"Found: {url} (HTTP status code: {status_code})"
