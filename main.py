@@ -16,6 +16,19 @@ from urllib.parse import urlsplit
 from rich.progress import track
 from pathlib import Path
 
+def fetch_geolocation(ip_address: str) -> None:
+    print()
+    try:
+        console.print_success(
+            "geo_lookup", f"Geolocation information found for {ip_address}:"
+        )
+        console.print_table(geo_lookup.get_geolocation(ip_address))
+    except requests.exceptions.ConnectionError:
+        console.print_error("HTTP Headers", "Error: host is unreachable.")
+    except requests.exceptions.HTTPError as e:
+        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+
+
 def verify_internet_connection() -> None:
     s = socket.socket()
     try:
@@ -24,6 +37,7 @@ def verify_internet_connection() -> None:
         sys.exit("Error: no internet connection detected.")
     finally:
         s.close()
+
 
 def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     print()
@@ -111,21 +125,10 @@ def main() -> None:
     except socket.gaierror:
         console.print_error("ip_lookup", "Error: unable to resolve the hostname.")
 
-    # IP GEOLOCATION
-    print()
-    try:
-        console.print_success(
-            "geo_lookup", f"Geolocation information found for {ip_address}:"
-        )
-        console.print_table(geo_lookup.get_geolocation(ip_address))
-    except requests.exceptions.ConnectionError:
-        console.print_error("HTTP Headers", "Error: host is unreachable.")
-    except requests.exceptions.HTTPError as e:
-        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
-
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
+    fetch_geolocation(ip_address)
 
 
 if __name__ == "__main__":
