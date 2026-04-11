@@ -91,22 +91,21 @@ def main() -> None:
     parser.add_argument("url", help="the url you want to recon")
     parser.add_argument("-t", "--timeout", type=int, default=10, help="set the timeout for HTTP requests (default: 10 seconds)")
     parser.add_argument("-d", "--delay", type=int, default=1, help="set the delay between requests in seconds (default: 1 second)")
-    parsed = urlsplit(parser.parse_args().url)
-    timeout = parser.parse_args().timeout
-    delay = parser.parse_args().delay
-    config = Config(timeout=timeout, delay=delay)
+    parsed = parser.parse_args()
+    split = urlsplit(parsed.url)
+    config = Config(timeout=parsed.timeout, delay=parsed.delay)
 
-    if parsed.netloc == "" or parsed.scheme not in ["http", "https"]:
+    if split.netloc == "" or split.scheme not in ["http", "https"]:
         sys.exit("Error: please enter a valid URL with http:// or https://.")
 
-    base_url = f"{parsed.scheme}://{parsed.netloc}"
-    print(f"\t[ Host: {parsed.netloc} ]\n")
+    base_url = f"{split.scheme}://{split.netloc}"
+    print(f"\t[ Host: {split.netloc} ]\n")
 
     verify_internet_connection()
 
     # IP LOOKUP
     try:
-        ip_address = ip_lookup.get_ip_address(parsed.netloc)
+        ip_address = ip_lookup.get_ip_address(split.netloc)
         console.print_success("ip_lookup", f"IP address found: {ip_address}")
     except socket.gaierror:
         console.print_error("ip_lookup", "Error: unable to resolve the hostname.")
@@ -123,8 +122,8 @@ def main() -> None:
     except requests.exceptions.HTTPError as e:
         console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
 
-    probe_well_knowns(base_url, parsed.netloc, config)
-    fetch_whois(parsed.netloc)
+    probe_well_knowns(base_url, split.netloc, config)
+    fetch_whois(split.netloc)
     fetch_http_headers(base_url)
 
 
