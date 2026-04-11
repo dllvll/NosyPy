@@ -16,6 +16,7 @@ from urllib.parse import urlsplit
 from rich.progress import track
 from pathlib import Path
 
+
 def fetch_geolocation(ip_address: str) -> None:
     print()
     try:
@@ -100,8 +101,20 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("url", help="the url you want to recon")
-    parser.add_argument("-t", "--timeout", type=int, default=10, help="set the timeout for HTTP requests (default: 10 seconds)")
-    parser.add_argument("-d", "--delay", type=int, default=1, help="set the delay between requests in seconds (default: 1 second)")
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        type=int,
+        default=10,
+        help="set the timeout for HTTP requests (default: 10 seconds)",
+    )
+    parser.add_argument(
+        "-d",
+        "--delay",
+        type=int,
+        default=1,
+        help="set the delay between requests in seconds (default: 1 second)",
+    )
     parsed = parser.parse_args()
     split = urlsplit(parsed.url)
     config = Config(timeout=parsed.timeout, delay=parsed.delay)
