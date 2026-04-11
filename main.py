@@ -34,6 +34,7 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
             well_knowns = file.readlines()
     except FileNotFoundError:
         console.print_error("well-known", "Error: well-knowns.txt file not found.")
+        return
 
     if Path(path).stat().st_size == 0:
         console.print_warning("well-known", "Warning: well-knowns.txt file is empty.")
