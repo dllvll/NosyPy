@@ -48,11 +48,13 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
         with open(path, "r") as file:
             well_knowns = file.readlines()
     except FileNotFoundError:
-        console.print_error("well-known", "Error: well-knowns.txt file not found.")
+        console.print_error(
+            "well-known", "Error: well-knowns.txt file not found.")
         return
 
     if Path(path).stat().st_size == 0:
-        console.print_warning("well-known", "Warning: well-knowns.txt file is empty.")
+        console.print_warning(
+            "well-known", "Warning: well-knowns.txt file is empty.")
         return
 
     for well_known in track(
@@ -132,7 +134,8 @@ def main() -> None:
         ip_address = ip_lookup.get_ip_address(split.netloc)
         console.print_success("ip_lookup", f"IP address found: {ip_address}")
     except socket.gaierror:
-        console.print_error("ip_lookup", "Error: unable to resolve the hostname.")
+        console.print_error(
+            "ip_lookup", "Error: unable to resolve the hostname.")
 
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
