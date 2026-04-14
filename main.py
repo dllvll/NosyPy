@@ -147,4 +147,5 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
+        console.print_warning("nosypy", "Program terminated by user.")
         sys.exit(130) # 130 stands for "Script terminated by Control-C"
