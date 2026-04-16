@@ -20,6 +20,7 @@ from modules import (
     whois_lookup,
 )
 
+
 def download_subdomains_file() -> None:
     path = "data/subdomains-top1million-5000.txt"
 
@@ -61,7 +62,7 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     print()
     path = "data/well_knowns.txt"
 
-    if (not Path(path).exists() or Path(path).stat().st_size > 0):
+    if (not Path(path).exists() or Path(path).stat().st_size == 0):
         console.print_warning(
             "well-known", "Warning: well-knowns.txt file is empty.")
         return
