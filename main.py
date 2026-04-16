@@ -12,9 +12,22 @@ from modules import whois_lookup
 from modules import page_prober
 from modules import ip_lookup
 from modules import geo_lookup
+from modules import file_grabber
 from urllib.parse import urlsplit
 from rich.progress import track
 from pathlib import Path
+
+
+def download_subdomains_file():
+    path = "data/subdomains-top1million-5000.txt"
+
+    try:
+        open(path, "r")
+    except FileNotFoundError:
+        file_content = file_grabber.get_file("https://raw.githubusercontent.com/", "danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt")
+        with open(path, "w") as file:
+            file.write(file_content)
+        console.print_success("subdomains", "data/subdomains-top1million-5000.txt was missing and has been downloaded.")
 
 
 def fetch_geolocation(ip_address: str) -> None:
@@ -137,6 +150,7 @@ def main() -> None:
         console.print_error(
             "ip_lookup", "Error: unable to resolve the hostname.")
 
+    download_subdomains_file()
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
@@ -148,4 +162,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         console.print_warning("nosypy", "Program terminated by user.")
-        sys.exit(130) # 130 stands for "Script terminated by Control-C"
+        sys.exit(130)  # 130 stands for "Script terminated by Control-C"
