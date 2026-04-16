@@ -59,18 +59,13 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     print()
     path = "data/well_knowns.txt"
 
-    try:
-        with open(path, "r") as file:
-            well_knowns = file.readlines()
-    except FileNotFoundError:
-        console.print_error(
-            "well-known", "Error: well-knowns.txt file not found.")
-        return
-
-    if Path(path).stat().st_size == 0:
+    if (not Path(path).exists() or Path(path).stat().st_size > 0):
         console.print_warning(
             "well-known", "Warning: well-knowns.txt file is empty.")
         return
+    else:
+        with open(path, "r") as file:
+            well_knowns = file.readlines()
 
     for well_known in track(
         well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."
