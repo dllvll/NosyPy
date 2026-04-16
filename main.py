@@ -21,9 +21,9 @@ from pathlib import Path
 def download_subdomains_file():
     path = "data/subdomains-top1million-5000.txt"
 
-    try:
-        open(path, "r")
-    except FileNotFoundError:
+    if (Path(path).exists() and Path(path).stat().st_size > 0):
+        return
+    else:
         file_content = file_grabber.get_file("https://raw.githubusercontent.com/", "danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt")
         with open(path, "w") as file:
             file.write(file_content)
