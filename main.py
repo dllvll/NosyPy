@@ -6,17 +6,19 @@ import sys
 import socket
 from config import Config
 from rich import print
-from modules import console
-from modules import http_headers
-from modules import whois_lookup
-from modules import page_prober
-from modules import ip_lookup
-from modules import geo_lookup
-from modules import file_grabber
 from urllib.parse import urlsplit
 from rich.progress import track
 from pathlib import Path
 
+from modules import (
+    console,
+    file_grabber,
+    geo_lookup,
+    http_headers,
+    ip_lookup,
+    page_prober,
+    whois_lookup,
+)
 
 def download_subdomains_file() -> None:
     path = "data/subdomains-top1million-5000.txt"
