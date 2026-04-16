@@ -132,6 +132,13 @@ def main() -> None:
         default=1,
         help="set the delay between requests in seconds (default: 1 second)",
     )
+    parser.add_argument(
+        "-sub",
+        "--subdomains",
+        type=int,
+        default=100,
+        help="set the number of subdomains to probe from the subdomains-top1million-5000.txt file (default: 100)",
+    )
     parsed = parser.parse_args()
     split = urlsplit(parsed.url)
     config = Config(timeout=parsed.timeout, delay=parsed.delay)
