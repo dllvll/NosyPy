@@ -18,7 +18,7 @@ from rich.progress import track
 from pathlib import Path
 
 
-def download_subdomains_file():
+def download_subdomains_file() -> None:
     path = "data/subdomains-top1million-5000.txt"
 
     if (Path(path).exists() and Path(path).stat().st_size > 0):
