@@ -21,6 +21,31 @@ from modules import (
 )
 
 
+def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
+    print()
+    path = "data/subdomains-top1million-5000.txt"
+
+    if (not Path(path).exists() or Path(path).stat().st_size == 0):
+        download_subdomains_file()
+
+    with open(path, "r") as file:
+        subdomains = file.readlines()
+
+    for subdomain in track(
+        subdomains, description="Probing for subdomains..."
+    ):
+        url = f"{scheme}://{subdomain.strip()}.{netloc.replace('www.', '')}"
+        try:
+            status_code = page_prober.probe_url(url, config)
+            if 200 <= status_code < 400:
+                console.print_success(
+                    "subdomains", f"Found: {url} (HTTP status code: {status_code})"
+                )
+            sleep(config.delay)
+        except requests.exceptions.RequestException as e:
+            pass
+
+
 def download_subdomains_file() -> None:
     path = "data/subdomains-top1million-5000.txt"
 
@@ -158,6 +183,7 @@ def main() -> None:
             "ip_lookup", "Error: unable to resolve the hostname.")
 
     download_subdomains_file()
+    probe_subdomains(split.scheme, split.netloc, config)
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
