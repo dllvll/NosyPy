@@ -214,3 +214,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Custom ignore rules
+data/subdomains-top1million-5000.txt
