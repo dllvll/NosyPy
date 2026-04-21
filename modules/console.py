@@ -1,5 +1,6 @@
 from rich.table import Table
 from rich import print
+from rich import rule
 
 
 def print_banner() -> None:
@@ -14,6 +15,12 @@ def print_banner() -> None:
                             ▀▀▀             ▀▀▀   
     """
     print(banner)
+
+
+def print_section_header(title: str) -> None:
+    """Print a section header."""
+    header = rule.Rule(title=f"[bold]{title}[/bold]", style="white")
+    print(header)
 
 
 def print_table(tableData):
