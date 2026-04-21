@@ -19,7 +19,7 @@ def print_banner() -> None:
 
 def print_section_header(title: str) -> None:
     """Print a section header."""
-    header = rule.Rule(title=f"[bold]{title}[/bold]", style="white")
+    header = rule.Rule(title=f"──────── [bold]{title}[/bold]", style="white", align="left")
     print(header)
 
 
