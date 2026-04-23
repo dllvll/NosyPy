@@ -22,7 +22,7 @@ from modules import (
 
 
 def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
-    print()
+    console.print_section_header("subdomains")
     path = "data/subdomains-top1million-5000.txt"
 
     if (not Path(path).exists() or Path(path).stat().st_size == 0):
@@ -182,7 +182,6 @@ def main() -> None:
         console.print_error(
             "ip_lookup", "Error: unable to resolve the hostname.")
 
-    download_subdomains_file()
     probe_subdomains(split.scheme, split.netloc, config)
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
