@@ -79,7 +79,7 @@ def download_subdomains_file() -> None:
 def fetch_geolocation(ip_address: str) -> None:
     """ Fetches geolocation information for the given IP address using the
     geo_lookup module and prints the results in a formatted table.
-    
+
     Args:
         ip_address: The IP address for which to fetch geolocation information.
     """
@@ -97,6 +97,11 @@ def fetch_geolocation(ip_address: str) -> None:
 
 
 def verify_internet_connection() -> None:
+    """ Verifies that the machine has an active internet connection by attempting
+    to connect to Google's DNS server (8.8.8.8). If the connection fails, it
+    exits the program with an error message.
+    """
+
     s = socket.socket()
     try:
         s.connect(("8.8.8.8", 53))
