@@ -77,6 +77,13 @@ def download_subdomains_file() -> None:
 
 
 def fetch_geolocation(ip_address: str) -> None:
+    """ Fetches geolocation information for the given IP address using the
+    geo_lookup module and prints the results in a formatted table.
+    
+    Args:
+        ip_address: The IP address for which to fetch geolocation information.
+    """
+
     print()
     try:
         console.print_success(
