@@ -32,7 +32,7 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
         netloc: The network location (domain) to probe.
         config: The configuration object containing timeout and delay settings.
     """
-    
+
     console.print_section_header("subdomains")
     path = "data/subdomains-top1million-5000.txt"
 
@@ -62,7 +62,7 @@ def download_subdomains_file() -> None:
     If the file is missing or empty, it downloads the file from the specified URL
     and saves it to the data directory.
     """
-    
+
     path = "data/subdomains-top1million-5000.txt"
 
     if (Path(path).exists() and Path(path).stat().st_size > 0):
