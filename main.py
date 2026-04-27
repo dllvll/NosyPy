@@ -178,6 +178,7 @@ def main() -> None:
     try:
         ip_address = ip_lookup.get_ip_address(split.netloc)
         console.print_success("ip_lookup", f"IP address found: {ip_address}")
+        fetch_geolocation(ip_address)
     except socket.gaierror:
         console.print_error(
             "ip_lookup", "Error: unable to resolve the hostname.")
@@ -186,8 +187,7 @@ def main() -> None:
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
-    fetch_geolocation(ip_address)
-
+    
 
 if __name__ == "__main__":
     try:
