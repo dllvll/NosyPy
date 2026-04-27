@@ -22,6 +22,16 @@ from modules import (
 
 
 def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
+    """ Probes for subdomains by reading from the subdomains-top1million-5000.txt
+    file and making HTTP requests to each potential subdomain. If a valid response
+    is received (status code 200-399), it prints the found subdomain and its status
+    code.
+
+    Args:
+        scheme: The URL scheme (http or https).
+        netloc: The network location (domain) to probe.
+        config: The configuration object containing timeout and delay settings.
+    """
     console.print_section_header("subdomains")
     path = "data/subdomains-top1million-5000.txt"
 
@@ -187,7 +197,7 @@ def main() -> None:
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
-    
+
 
 if __name__ == "__main__":
     try:
