@@ -21,6 +21,10 @@ from modules import (
 )
 
 
+SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"    
+WELL_KNOWNS_PATH = "data/well_knowns.txt"
+
+
 def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
     """ Probes for subdomains by reading from the subdomains-top1million-5000.txt
     file and making HTTP requests to each potential subdomain. If a valid response
@@ -34,12 +38,11 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
     """
 
     console.print_section_header("subdomains")
-    path = "data/subdomains-top1million-5000.txt"
 
-    if (not Path(path).exists() or Path(path).stat().st_size == 0):
+    if (not Path(SUBDOMAINS_PATH).exists() or Path(SUBDOMAINS_PATH).stat().st_size == 0):
         download_subdomains_file()
 
-    with open(path, "r") as file:
+    with open(SUBDOMAINS_PATH, "r") as file:
         subdomains = file.readlines()
 
     for subdomain in track(
@@ -63,14 +66,12 @@ def download_subdomains_file() -> None:
     and saves it to the data directory.
     """
 
-    path = "data/subdomains-top1million-5000.txt"
-
-    if (Path(path).exists() and Path(path).stat().st_size > 0):
+    if (Path(SUBDOMAINS_PATH).exists() and Path(SUBDOMAINS_PATH).stat().st_size > 0):
         return
     else:
         file_content = file_grabber.get_file(
             "https://raw.githubusercontent.com/", "danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt")
-        with open(path, "w") as file:
+        with open(SUBDOMAINS_PATH, "w") as file:
             file.write(file_content)
         console.print_success(
             "subdomains", "data/subdomains-top1million-5000.txt was missing and has been downloaded.")
@@ -123,14 +124,13 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     """
 
     print()
-    path = "data/well_knowns.txt"
 
-    if (not Path(path).exists() or Path(path).stat().st_size == 0):
+    if (not Path(WELL_KNOWNS_PATH).exists() or Path(WELL_KNOWNS_PATH).stat().st_size == 0):
         console.print_warning(
             "well-known", "Warning: well-knowns.txt file is empty.")
         return
     else:
-        with open(path, "r") as file:
+        with open(WELL_KNOWNS_PATH, "r") as file:
             well_knowns = file.readlines()
 
     for well_known in track(
