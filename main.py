@@ -151,6 +151,13 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
 
 
 def fetch_http_headers(base_url: str) -> None:
+    """ Fetches HTTP headers for the given base URL using the http_headers module and
+    prints the results in a formatted table.
+
+    Args:
+        base_url: The base URL for which to fetch HTTP headers.
+    """
+    
     print()
     try:
         headers = http_headers.get_headers(base_url)
