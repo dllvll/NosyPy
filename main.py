@@ -61,9 +61,8 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
 
 
 def download_subdomains_file() -> None:
-    """ Checks if the subdomains-top1million-5000.txt file exists and is not empty.
-    If the file is missing or empty, it downloads the file from the specified URL
-    and saves it to the data directory.
+    """ Downloads the subdomains-top1million-5000.txt file from the
+    SecLists GitHub repository and saves it to the data directory.
     """
 
     file_content = file_grabber.get_file(
