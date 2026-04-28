@@ -157,7 +157,7 @@ def fetch_http_headers(base_url: str) -> None:
     Args:
         base_url: The base URL for which to fetch HTTP headers.
     """
-    
+
     print()
     try:
         headers = http_headers.get_headers(base_url)
@@ -170,6 +170,12 @@ def fetch_http_headers(base_url: str) -> None:
 
 
 def fetch_whois(netloc: str) -> None:
+    """ Fetches WHOIS information for the given network location (domain)
+    using the whois_lookup module and prints the results in a formatted table.
+
+    Args:
+        netloc: The network location (domain) for which to fetch WHOIS information.
+    """
     print()
     try:
         w = whois_lookup.get_whois(netloc)
