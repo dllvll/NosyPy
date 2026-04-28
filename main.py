@@ -112,6 +112,16 @@ def verify_internet_connection() -> None:
 
 
 def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
+    """ Probes for well-known URLs by reading from the well_knowns.txt file and making
+    HTTP requests to each URL. If a valid response is received (status code 200-399),
+    it prints the found URL and its status code.
+    
+    Args:
+        base_url: The base URL to which the well-known paths will be appended.
+        netloc: The network location (domain) to probe.
+        config: The configuration object containing timeout and delay settings.
+    """
+
     print()
     path = "data/well_knowns.txt"
 
