@@ -66,15 +66,14 @@ def download_subdomains_file() -> None:
     and saves it to the data directory.
     """
 
-    if (Path(SUBDOMAINS_PATH).exists() and Path(SUBDOMAINS_PATH).stat().st_size > 0):
-        return
-    else:
-        file_content = file_grabber.get_file(
-            "https://raw.githubusercontent.com/", "danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt")
-        with open(SUBDOMAINS_PATH, "w") as file:
-            file.write(file_content)
-        console.print_success(
-            "subdomains", "data/subdomains-top1million-5000.txt was missing and has been downloaded.")
+    file_content = file_grabber.get_file(
+        "https://raw.githubusercontent.com/",
+        "danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt"
+        )
+    with open(SUBDOMAINS_PATH, "w") as file:
+        file.write(file_content)
+    console.print_success(
+        "subdomains", "data/subdomains-top1million-5000.txt has been downloaded.")
 
 
 def fetch_geolocation(ip_address: str) -> None:
