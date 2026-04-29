@@ -66,8 +66,7 @@ def download_subdomains_file() -> None:
     SecLists GitHub repository and saves it to the data directory.
     """
 
-    url = "https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt"
-    file_content = file_grabber.get_file(url)
+    file_content = file_grabber.get_file(SUBDOMAINS_URL)
     with open(SUBDOMAINS_PATH, "w") as file:
         file.write(file_content)
     console.print_success(
