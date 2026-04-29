@@ -21,6 +21,7 @@ from modules import (
 )
 
 
+SUBDOMAINS_URL = "https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt"
 SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"
 WELL_KNOWNS_PATH = "data/well_knowns.txt"
 
