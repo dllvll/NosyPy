@@ -21,7 +21,7 @@ from modules import (
 )
 
 
-SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"    
+SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"
 WELL_KNOWNS_PATH = "data/well_knowns.txt"
 
 
@@ -64,7 +64,7 @@ def download_subdomains_file() -> None:
     """ Downloads the subdomains-top1million-5000.txt file from the
     SecLists GitHub repository and saves it to the data directory.
     """
-    
+
     url = "https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/DNS/subdomains-top1million-5000.txt"
     file_content = file_grabber.get_file(url)
     with open(SUBDOMAINS_PATH, "w") as file:
@@ -112,7 +112,7 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
     """ Probes for well-known URLs by reading from the well_knowns.txt file and making
     HTTP requests to each URL. If a valid response is received (status code 200-399),
     it prints the found URL and its status code.
-    
+
     Args:
         base_url: The base URL to which the well-known paths will be appended.
         netloc: The network location (domain) to probe.
