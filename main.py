@@ -67,6 +67,11 @@ def download_subdomains_file() -> None:
     """
 
     file_content = file_grabber.get_file(SUBDOMAINS_URL)
+    if file_content is None:
+        console.print_error(
+            "subdomains", "Error: unable to download the subdomains file.")
+        return
+
     with open(SUBDOMAINS_PATH, "w") as file:
         file.write(file_content)
     console.print_success(
