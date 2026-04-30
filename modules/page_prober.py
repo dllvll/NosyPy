@@ -3,7 +3,16 @@ from config import Config
 
 
 def probe_url(url: str, config: Config) -> int:
-    """Probes a URL to check if it's reachable and returns the status code."""
+    """Probes a URL to check if it's reachable and returns the status code.
+    
+    Args:
+        url: The URL to probe.
+        config: A Config object containing configuration settings.
+
+    Returns:
+        The HTTP status code of the response.
+    """
+
     response = requests.get(
         url,
         timeout=config.timeout,
