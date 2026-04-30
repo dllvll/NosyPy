@@ -63,12 +63,18 @@ def print_success(scope: str, message: str) -> None:
         scope: The scope of the success message.
         message: The success message to print.
     """
-    
+
     print(f"({scope}) {message}")
 
 
 def print_error(scope: str, message: str) -> None:
-    """Print an error message."""
+    """Prints an error message.
+
+    Args:
+        scope: The scope of the error message.
+        message: The error message to print.
+    """
+    
     print(f"({scope}) {message}")
 
 
