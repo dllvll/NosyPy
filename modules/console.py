@@ -17,6 +17,11 @@ def print_banner() -> None:
     print(banner)
 
 
+def print_host(host: str) -> None:
+    """Print the host being reconned."""
+    print(f"\t[ Host: {host} ]\n")
+
+
 def print_section_header(title: str) -> None:
     """Print a section header."""
     header = rule.Rule(title=f"──────── [bold]{title}[/bold]", style="white", align="left")
