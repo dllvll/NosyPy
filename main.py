@@ -43,8 +43,12 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
     if (not Path(SUBDOMAINS_PATH).exists() or Path(SUBDOMAINS_PATH).stat().st_size == 0):
         download_subdomains_file()
 
-    with open(SUBDOMAINS_PATH, "r") as file:
-        subdomains = file.readlines()
+    try:
+        with open(SUBDOMAINS_PATH, "r") as file:
+            subdomains = file.readlines()
+    except OSError as e:
+        console.print_error("subdomains", f"Error reading file: {e}")
+        return
 
     for subdomain in track(
         subdomains, description="Probing for subdomains..."
