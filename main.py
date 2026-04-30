@@ -72,10 +72,13 @@ def download_subdomains_file() -> None:
             "subdomains", "Error: unable to download the subdomains file.")
         return
 
-    with open(SUBDOMAINS_PATH, "w") as file:
-        file.write(file_content)
-    console.print_success(
-        "subdomains", "data/subdomains-top1million-5000.txt has been downloaded.")
+    try:
+        with open(SUBDOMAINS_PATH, "w") as file:
+            file.write(file_content)
+        console.print_success(
+            "subdomains", "data/subdomains-top1million-5000.txt has been downloaded.")
+    except OSError as e:
+        console.print_error("subdomains", f"Error writing to file: {e}")
 
 
 def fetch_geolocation(ip_address: str) -> None:
