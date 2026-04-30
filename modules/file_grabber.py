@@ -2,7 +2,14 @@ import requests
 
 
 def get_file(url: str) -> str | None:
-    """Download a file from a given URL."""
+    """Downloads a file from a given URL.
+
+    Args:
+        url: The URL of the file to download.
+
+    Returns:
+        The content of the downloaded file, or None if the file was not found.
+    """
     file = requests.get(
         url,
         timeout=10,
