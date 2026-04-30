@@ -20,7 +20,12 @@ def print_banner() -> None:
 
 
 def print_host(host: str) -> None:
-    """Print the host being reconned."""
+    """Print the host being reconned.
+    
+    Args:
+        host: The host being reconned.
+    """
+
     print(f"\t[ Host: {host} ]\n")
 
 
