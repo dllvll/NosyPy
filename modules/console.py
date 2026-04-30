@@ -57,7 +57,13 @@ def print_table(tableData):
 
 
 def print_success(scope: str, message: str) -> None:
-    """Print a success message."""
+    """Prints a success message.
+    
+    Args:
+        scope: The scope of the success message.
+        message: The success message to print.
+    """
+    
     print(f"({scope}) {message}")
 
 
