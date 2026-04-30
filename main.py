@@ -233,7 +233,7 @@ def main() -> None:
         sys.exit("Error: please enter a valid URL with http:// or https://.")
 
     base_url = f"{split.scheme}://{split.netloc}"
-    print(f"\t[ Host: {split.netloc} ]\n")
+    console.print_host(split.netloc)
 
     verify_internet_connection()
 
