@@ -4,7 +4,9 @@ from rich import rule
 
 
 def print_banner() -> None:
-    """Print NosyPy's ASCII art banner."""
+    """ Prints the NosyPy banner.
+    """
+
     banner = r"""
     ▄▄▄    ▄▄▄                   ▄▄▄▄▄▄▄         
     ████▄  ███                   ███▀▀███▄       
