@@ -41,7 +41,12 @@ def print_section_header(title: str) -> None:
 
 
 def print_table(tableData):
-    """Print a table with the given data."""
+    """Prints a table with the given data.
+
+    Args:
+        tableData: A dictionary containing the data to be printed in the table.
+    """
+
     table = Table(show_header=False)
     table.add_column()
     table.add_column()
