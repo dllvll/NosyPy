@@ -134,8 +134,12 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
             "well-known", "Warning: well-knowns.txt file is empty.")
         return
     else:
-        with open(WELL_KNOWNS_PATH, "r") as file:
-            well_knowns = file.readlines()
+        try:
+            with open(WELL_KNOWNS_PATH, "r") as file:
+                well_knowns = file.readlines()
+        except OSError as e:
+            console.print_error("well-known", f"Error reading file: {e}")
+            return
 
     for well_known in track(
         well_knowns, description=f"Probing {netloc} for {len(well_knowns)} URLs..."
