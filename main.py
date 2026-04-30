@@ -57,7 +57,7 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
                     "subdomains", f"Found: {url} (HTTP status code: {status_code})"
                 )
             sleep(config.delay)
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException:
             pass
 
 
