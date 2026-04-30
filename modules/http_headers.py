@@ -2,7 +2,12 @@ import requests
 
 
 def get_headers(domain):
-    """Get HTTP headers for a given domain."""
+    """Gets HTTP headers for a given domain.
+
+    Args:
+        domain: The domain for which to fetch HTTP headers.
+    """
+
     r = requests.get(
         domain,
         timeout=10,

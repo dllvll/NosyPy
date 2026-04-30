@@ -1,11 +1,15 @@
 import requests
 
 
-def get_geolocation(ip_address):
+def get_geolocation(ip_address: str) -> dict:
     """Gets geolocation information for a given IP address.
-    
+
     Args:
         ip_address: The IP address to look up.
+
+    Returns:
+        A dictionary containing hostname, city, region, country,
+        location, organization, postal code, and timezone.
     """
 
     response = requests.get(
