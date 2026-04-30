@@ -2,7 +2,12 @@ import requests
 
 
 def get_geolocation(ip_address):
-    """Get geolocation information for a given IP address."""
+    """Gets geolocation information for a given IP address.
+    
+    Args:
+        ip_address: The IP address to look up.
+    """
+
     response = requests.get(
         f"https://ipinfo.io/{ip_address}/json",
         timeout=10,
