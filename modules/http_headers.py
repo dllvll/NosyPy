@@ -1,11 +1,14 @@
 import requests
 
 
-def get_headers(domain):
+def get_headers(domain: str) -> dict:
     """Gets HTTP headers for a given domain.
 
     Args:
         domain: The domain for which to fetch HTTP headers.
+
+    Returns:
+        A dictionary containing the HTTP headers.
     """
 
     r = requests.get(
