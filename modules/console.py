@@ -30,7 +30,12 @@ def print_host(host: str) -> None:
 
 
 def print_section_header(title: str) -> None:
-    """Print a section header."""
+    """Prints a section header.
+    
+    Args:
+        title: The title of the section.
+    """
+
     header = rule.Rule(title=f"──────── [bold]{title}[/bold]", style="white", align="left")
     print(header)
 
