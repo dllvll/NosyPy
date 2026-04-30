@@ -74,10 +74,16 @@ def print_error(scope: str, message: str) -> None:
         scope: The scope of the error message.
         message: The error message to print.
     """
-    
+
     print(f"({scope}) {message}")
 
 
 def print_warning(scope: str, message: str) -> None:
-    """Print a warning message."""
+    """Prints a warning message.
+
+    Args:
+        scope: The scope of the warning message.
+        message: The warning message to print.
+    """
+
     print(f"({scope}) {message}")
