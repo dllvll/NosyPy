@@ -229,8 +229,13 @@ def main() -> None:
     split = urlsplit(parsed.url)
     config = Config(timeout=parsed.timeout, delay=parsed.delay)
 
-    if split.netloc == "" or split.scheme not in ["http", "https"]:
-        sys.exit("Error: please enter a valid URL with http:// or https://.")
+    if split.netloc == "":
+        console.print_error("nosypy", "Error: a valid URL must be provided.")
+        sys.exit(1)
+
+    if split.scheme not in ["http", "https"]:
+        console.print_error("nosypy", "Error: scheme must be http or https.")
+        sys.exit(1)
 
     base_url = f"{split.scheme}://{split.netloc}"
     console.print_host(split.netloc)
