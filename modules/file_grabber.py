@@ -1,5 +1,7 @@
 import requests
 
+from config import USER_AGENT
+
 def get_file(url: str, timeout: int) -> str | None:
     """Downloads a file from a given URL.
 
@@ -14,7 +16,7 @@ def get_file(url: str, timeout: int) -> str | None:
         url,
         timeout=timeout,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
+            "User-Agent": USER_AGENT
         },
     )
 
