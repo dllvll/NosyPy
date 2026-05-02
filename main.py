@@ -41,7 +41,7 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
     console.print_section_header("subdomains")
 
     if (not Path(SUBDOMAINS_PATH).exists() or Path(SUBDOMAINS_PATH).stat().st_size == 0):
-        download_subdomains_file()
+        download_subdomains_file(config)
 
     try:
         with open(SUBDOMAINS_PATH, "r") as file:
@@ -65,12 +65,13 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
             pass
 
 
-def download_subdomains_file() -> None:
+def download_subdomains_file(config: Config) -> None:
     """ Downloads the subdomains-top1million-5000.txt file from the
     SecLists GitHub repository and saves it to the data directory.
     """
 
-    file_content = file_grabber.get_file(SUBDOMAINS_URL)
+    file_content = file_grabber.get_file(SUBDOMAINS_URL, config)
+    
     if file_content is None:
         console.print_error(
             "subdomains", "Error: unable to download the subdomains file.")
