@@ -1,6 +1,7 @@
 import requests
 from config import Config
 
+from config import USER_AGENT
 
 def probe_url(url: str, config: Config) -> int:
     """Probes a URL to check if it's reachable and returns the status code.
@@ -17,7 +18,7 @@ def probe_url(url: str, config: Config) -> int:
         url,
         timeout=config.timeout,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
+            "User-Agent": USER_AGENT
         },
     )
     return response.status_code
