@@ -70,7 +70,7 @@ def download_subdomains_file(config: Config) -> None:
     SecLists GitHub repository and saves it to the data directory.
     """
 
-    file_content = file_grabber.get_file(SUBDOMAINS_URL, config)
+    file_content = file_grabber.get_file(SUBDOMAINS_URL, config.timeout)
     
     if file_content is None:
         console.print_error(
