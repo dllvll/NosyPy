@@ -1,5 +1,6 @@
 import requests
 
+from config import USER_AGENT
 
 def get_geolocation(ip_address: str) -> dict:
     """Gets geolocation information for a given IP address.
@@ -16,7 +17,7 @@ def get_geolocation(ip_address: str) -> dict:
         f"https://ipinfo.io/{ip_address}/json",
         timeout=10,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
+            "User-Agent": USER_AGENT
         },
     )
     response.raise_for_status()
