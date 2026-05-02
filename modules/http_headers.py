@@ -1,5 +1,6 @@
 import requests
 
+from config import USER_AGENT
 
 def get_headers(domain: str) -> dict:
     """Gets HTTP headers for a given domain.
@@ -15,7 +16,7 @@ def get_headers(domain: str) -> dict:
         domain,
         timeout=10,
         headers={
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0"
+            "User-Agent": USER_AGENT
         },
     )
     r.raise_for_status()
