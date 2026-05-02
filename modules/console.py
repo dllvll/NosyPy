@@ -1,6 +1,5 @@
 from rich.table import Table
 from rich import print
-from rich import rule
 
 
 def print_banner() -> None:
