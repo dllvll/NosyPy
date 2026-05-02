@@ -38,8 +38,6 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
         config: The configuration object containing timeout and delay settings.
     """
 
-    console.print_section_header("subdomains")
-
     if (not Path(SUBDOMAINS_PATH).exists() or Path(SUBDOMAINS_PATH).stat().st_size == 0):
         download_subdomains_file(config)
 

@@ -29,17 +29,6 @@ def print_host(host: str) -> None:
     print(f"\t[ Host: {host} ]\n")
 
 
-def print_section_header(title: str) -> None:
-    """Prints a section header.
-    
-    Args:
-        title: The title of the section.
-    """
-
-    header = rule.Rule(title=f"──────── [bold]{title}[/bold]", style="white", align="left")
-    print(header)
-
-
 def print_table(tableData):
     """Prints a table with the given data.
 
