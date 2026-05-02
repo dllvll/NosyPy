@@ -71,7 +71,7 @@ def download_subdomains_file(config: Config) -> None:
     """
 
     file_content = file_grabber.get_file(SUBDOMAINS_URL, config.timeout)
-    
+
     if file_content is None:
         console.print_error(
             "subdomains", "Error: unable to download the subdomains file.")
