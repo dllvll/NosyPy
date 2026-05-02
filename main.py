@@ -101,9 +101,9 @@ def fetch_geolocation(ip_address: str) -> None:
         )
         console.print_table(geo_lookup.get_geolocation(ip_address))
     except requests.exceptions.ConnectionError:
-        console.print_error("HTTP Headers", "Error: host is unreachable.")
+        console.print_error("geo_lookup", "Error: host is unreachable.")
     except requests.exceptions.HTTPError as e:
-        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+        console.print_error("geo_lookup", "HTTP Error: " + e.args[0])
 
 
 def verify_internet_connection() -> None:
@@ -177,9 +177,9 @@ def fetch_http_headers(base_url: str) -> None:
         console.print_success("http_headers", "HTTP Headers found:")
         console.print_table(headers)
     except requests.exceptions.ConnectionError:
-        console.print_error("HTTP Headers", "Error: host is unreachable.")
+        console.print_error("http_headers", "Error: host is unreachable.")
     except requests.exceptions.HTTPError as e:
-        console.print_error("HTTP Headers", "HTTP Error: " + e.args[0])
+        console.print_error("http_headers", "HTTP Error: " + e.args[0])
 
 
 def fetch_whois(netloc: str) -> None:
@@ -195,9 +195,9 @@ def fetch_whois(netloc: str) -> None:
         console.print_success("whois", "WHOIS Information found:")
         console.print_table(w)
     except whois.exceptions.WhoisDomainNotFoundError:
-        console.print_error("WHOIS", "Error: the domain was not found.")
+        console.print_error("whois", "Error: the domain was not found.")
     except whois.exceptions.PywhoisError as e:
-        console.print_error("WHOIS", "WHOIS Error: " + e.args[0])
+        console.print_error("whois", "WHOIS Error: " + e.args[0])
 
 
 def main() -> None:
