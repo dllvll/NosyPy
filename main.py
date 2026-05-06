@@ -138,10 +138,18 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
 
     print()
 
-    if (not Path(WELL_KNOWNS_PATH).exists() or Path(WELL_KNOWNS_PATH).stat().st_size == 0):
-        console.print_warning(
-            "well-known", "Warning: well-knowns.txt file is empty.")
+    if (not Path(WELL_KNOWNS_PATH).exists()):
+        console.print_warning("well-known", "Warning: well-knowns.txt file not found.")
         return
+
+    if (Path(WELL_KNOWNS_PATH).stat().st_size == 0):
+        console.print_warning("well-known", "Warning: well-knowns.txt file is empty.")
+        return
+
+    #  or Path(WELL_KNOWNS_PATH).stat().st_size == 0):
+    #     console.print_warning(
+    #         "well-known", "Warning: well-knowns.txt file is empty.")
+    #     return
     
     try:
         with open(WELL_KNOWNS_PATH, "r") as file:
