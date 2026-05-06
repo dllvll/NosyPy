@@ -26,7 +26,7 @@ SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"
 WELL_KNOWNS_PATH = "data/well_knowns.txt"
 
 
-def probe_subdomains(scheme: str, netloc: str, config: Config, i: int) -> None:
+def probe_subdomains(scheme: str, netloc: str, config: Config, limit: int) -> None:
     """ Probes for subdomains by reading from the subdomains-top1million-5000.txt
     file and making HTTP requests to each potential subdomain. If a valid response
     is received (status code 200-399), it prints the found subdomain and its status
@@ -36,7 +36,7 @@ def probe_subdomains(scheme: str, netloc: str, config: Config, i: int) -> None:
         scheme: The URL scheme (http or https).
         netloc: The network location (domain) to probe.
         config: The configuration object containing timeout and delay settings.
-        i: The number of subdomains to probe.
+        limit: The maximum number of subdomains to probe.
     """
 
     print()
@@ -46,7 +46,7 @@ def probe_subdomains(scheme: str, netloc: str, config: Config, i: int) -> None:
 
     try:
         with open(SUBDOMAINS_PATH, "r") as file:
-            subdomains = file.readlines()[0:i]
+            subdomains = file.readlines()[0:limit]
     except OSError as e:
         console.print_error("subdomains", f"Error reading file: {e}")
         return
