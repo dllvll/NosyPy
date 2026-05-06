@@ -246,7 +246,6 @@ def main() -> None:
 
     verify_internet_connection()
 
-    # IP LOOKUP
     try:
         ip_address = ip_lookup.get_ip_address(split.netloc)
         console.print_success("ip_lookup", f"IP address found: {ip_address}")
