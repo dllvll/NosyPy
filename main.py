@@ -118,7 +118,8 @@ def verify_internet_connection() -> None:
     try:
         s.connect(("8.8.8.8", 53))
     except socket.error:
-        sys.exit("Error: no internet connection detected.")
+        console.print_error("nosypy", "Error: no internet connection detected.")
+        sys.exit(1)
     finally:
         s.close()
 
