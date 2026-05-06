@@ -146,11 +146,6 @@ def probe_well_knowns(base_url: str, netloc: str, config: Config) -> None:
         console.print_warning("well-known", "Warning: well-knowns.txt file is empty.")
         return
 
-    #  or Path(WELL_KNOWNS_PATH).stat().st_size == 0):
-    #     console.print_warning(
-    #         "well-known", "Warning: well-knowns.txt file is empty.")
-    #     return
-    
     try:
         with open(WELL_KNOWNS_PATH, "r") as file:
             well_knowns = file.readlines()
