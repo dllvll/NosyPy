@@ -26,7 +26,7 @@ SUBDOMAINS_PATH = "data/subdomains-top1million-5000.txt"
 WELL_KNOWNS_PATH = "data/well_knowns.txt"
 
 
-def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
+def probe_subdomains(scheme: str, netloc: str, config: Config, i: int) -> None:
     """ Probes for subdomains by reading from the subdomains-top1million-5000.txt
     file and making HTTP requests to each potential subdomain. If a valid response
     is received (status code 200-399), it prints the found subdomain and its status
@@ -36,14 +36,17 @@ def probe_subdomains(scheme: str, netloc: str, config: Config) -> None:
         scheme: The URL scheme (http or https).
         netloc: The network location (domain) to probe.
         config: The configuration object containing timeout and delay settings.
+        i: The number of subdomains to probe.
     """
+
+    print()
 
     if (not Path(SUBDOMAINS_PATH).exists() or Path(SUBDOMAINS_PATH).stat().st_size == 0):
         download_subdomains_file(config)
 
     try:
         with open(SUBDOMAINS_PATH, "r") as file:
-            subdomains = file.readlines()
+            subdomains = file.readlines()[0:i]
     except OSError as e:
         console.print_error("subdomains", f"Error reading file: {e}")
         return
@@ -93,6 +96,7 @@ def fetch_geolocation(ip_address: str) -> None:
     """
 
     print()
+
     try:
         console.print_success(
             "geo_lookup", f"Geolocation information found for {ip_address}:"
@@ -250,7 +254,7 @@ def main() -> None:
         console.print_error(
             "ip_lookup", "Error: unable to resolve the hostname.")
 
-    probe_subdomains(split.scheme, split.netloc, config)
+    probe_subdomains(split.scheme, split.netloc, config, parsed.subdomains)
     probe_well_knowns(base_url, split.netloc, config)
     fetch_whois(split.netloc)
     fetch_http_headers(base_url)
